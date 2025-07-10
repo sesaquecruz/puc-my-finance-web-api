@@ -7,11 +7,12 @@ import {
   Inject,
   Post,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiBody, ApiTags } from '@nestjs/swagger';
 
 import { AccountResponseDto, CreateAccountRequestDto } from './account.dto';
 import { IAccountService } from './account.service.interface';
 
+@ApiTags('Accounts')
 @Controller('/accounts')
 export class AccountController {
   constructor(
