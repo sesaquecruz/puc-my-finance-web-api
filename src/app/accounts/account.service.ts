@@ -16,6 +16,18 @@ export class AccountService implements IAccountService {
     private readonly accountRepository: IAccountRepository,
   ) {}
 
+  async getAccounts(): Promise<AccountResponseDto[]> {
+    try {
+      const accounts = await this.accountRepository.getAll();
+
+      return accounts.map((account) =>
+        this.mapAccountEntityToResponseDto(account),
+      );
+    } catch (error) {
+      throw InternalError(this.logger, error);
+    }
+  }
+
   async createAccount(
     createAccountDto: CreateAccountRequestDto,
   ): Promise<AccountResponseDto> {

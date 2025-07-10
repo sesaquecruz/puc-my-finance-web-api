@@ -1,6 +1,8 @@
 import { AccountResponseDto, CreateAccountRequestDto } from './account.dto';
 
 export interface IAccountService {
+  getAccounts(): Promise<AccountResponseDto[]>;
+
   createAccount(
     createAccountDto: CreateAccountRequestDto,
   ): Promise<AccountResponseDto>;

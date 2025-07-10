@@ -11,6 +11,14 @@ export class AccountRepository implements IAccountRepository {
     private readonly accountRepository: Repository<AccountEntity>,
   ) {}
 
+  async getAll(): Promise<AccountEntity[]> {
+    return this.accountRepository
+      .createQueryBuilder()
+      .orderBy('type::text', 'ASC')
+      .addOrderBy('description', 'ASC')
+      .getMany();
+  }
+
   async save(account: Partial<AccountEntity>): Promise<AccountEntity> {
     return this.accountRepository.save(this.accountRepository.create(account));
   }
