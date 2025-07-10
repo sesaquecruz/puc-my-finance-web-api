@@ -56,6 +56,21 @@ export class AccountService implements IAccountService {
     }
   }
 
+  async updateAccountById(
+    id: number,
+    updateAccountDto: Partial<CreateAccountRequestDto>,
+  ): Promise<void> {
+    try {
+      await this.accountRepository.updateById(id, updateAccountDto);
+    } catch (error) {
+      if (error instanceof EntityNotFoundError) {
+        throw NotFoundError(this.logger, error);
+      }
+
+      throw InternalError(this.logger, error);
+    }
+  }
+
   private mapAccountEntityToResponseDto(
     account: AccountEntity,
   ): AccountResponseDto {

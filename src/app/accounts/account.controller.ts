@@ -7,6 +7,7 @@ import {
   Inject,
   Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiBody, ApiTags } from '@nestjs/swagger';
 
@@ -51,5 +52,19 @@ export class AccountController {
     @Body() createAccountDto: CreateAccountRequestDto,
   ): Promise<AccountResponseDto> {
     return this.accountService.createAccount(createAccountDto);
+  }
+
+  @Put('/:id')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Update account by id' })
+  @ApiResponse({ status: 200, description: 'Account successfully updated.' })
+  @ApiResponse({ status: 404, description: 'Account not found.' })
+  @ApiResponse({ status: 500, description: 'Server error.' })
+  @ApiBody({ type: CreateAccountRequestDto })
+  updateAccountById(
+    @Param('id') id: number,
+    @Body() updateAccountDto: Partial<CreateAccountRequestDto>,
+  ): Promise<void> {
+    return this.accountService.updateAccountById(id, updateAccountDto);
   }
 }

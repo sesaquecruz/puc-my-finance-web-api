@@ -8,6 +8,11 @@ export interface IAccountService {
   createAccount(
     createAccountDto: CreateAccountRequestDto,
   ): Promise<AccountResponseDto>;
+
+  updateAccountById(
+    id: number,
+    updateAccountDto: Partial<CreateAccountRequestDto>,
+  ): Promise<void>;
 }
 
 export const IAccountService = Symbol('IAccountService');
