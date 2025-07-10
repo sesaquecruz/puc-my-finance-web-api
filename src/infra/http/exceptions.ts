@@ -15,5 +15,5 @@ export function InternalError(logger: Logger, error: Error): Error {
 export function NotFoundError(logger: Logger, error: Error): Error {
   logger.error(error);
 
-  return new NotFoundException('The requested item was not found.');
+  return new NotFoundException('The item was not found.');
 }
