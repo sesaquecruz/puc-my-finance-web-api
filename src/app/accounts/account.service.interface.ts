@@ -13,6 +13,8 @@ export interface IAccountService {
     id: number,
     updateAccountDto: Partial<CreateAccountRequestDto>,
   ): Promise<void>;
+
+  deleteAccountById(id: number): Promise<void>;
 }
 
 export const IAccountService = Symbol('IAccountService');

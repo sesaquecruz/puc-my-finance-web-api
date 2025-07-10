@@ -71,6 +71,18 @@ export class AccountService implements IAccountService {
     }
   }
 
+  async deleteAccountById(id: number): Promise<void> {
+    try {
+      await this.accountRepository.deleteById(id);
+    } catch (error) {
+      if (error instanceof EntityNotFoundError) {
+        throw NotFoundError(this.logger, error);
+      }
+
+      throw InternalError(this.logger, error);
+    }
+  }
+
   private mapAccountEntityToResponseDto(
     account: AccountEntity,
   ): AccountResponseDto {

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -66,5 +67,15 @@ export class AccountController {
     @Body() updateAccountDto: Partial<CreateAccountRequestDto>,
   ): Promise<void> {
     return this.accountService.updateAccountById(id, updateAccountDto);
+  }
+
+  @Delete('/:id')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Delete account by id' })
+  @ApiResponse({ status: 200, description: 'Account successfully deleted.' })
+  @ApiResponse({ status: 404, description: 'Account not found.' })
+  @ApiResponse({ status: 500, description: 'Server error.' })
+  deleteAccountById(@Param('id') id: number): Promise<void> {
+    return this.accountService.deleteAccountById(id);
   }
 }

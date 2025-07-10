@@ -34,4 +34,12 @@ export class AccountRepository implements IAccountRepository {
       throw new EntityNotFoundError(AccountEntity, id);
     }
   }
+
+  async deleteById(id: number): Promise<void> {
+    const result = await this.accountRepository.delete({ id });
+
+    if (result.affected === 0) {
+      throw new EntityNotFoundError(AccountEntity, id);
+    }
+  }
 }
