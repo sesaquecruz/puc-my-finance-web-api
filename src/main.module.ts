@@ -3,8 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AccountModule } from './app/accounts/account.module';
-import { envValidator } from './infra/config/env.validator';
-import { TypeOrmConfig } from './infra/config/typeorm.config';
+import { envValidator } from './config/env.config';
+import { TypeOrmConfig } from './config/typeorm.config';
 import { LoggerMiddleware } from './infra/http/logger.middleware';
 
 @Module({

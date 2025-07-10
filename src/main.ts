@@ -4,7 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { version } from '../package.json';
-import { EnvDto } from './infra/config/env.dto';
+import { EnvDto } from './config/env.config';
 import { MainModule } from './main.module';
 
 async function main(): Promise<void> {

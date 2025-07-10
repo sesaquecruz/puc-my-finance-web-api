@@ -7,7 +7,7 @@ import type {
 
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
-import { EnvDto } from './env.dto';
+import { EnvDto } from './env.config';
 
 @Injectable()
 export class TypeOrmConfig implements TypeOrmOptionsFactory {
