@@ -19,6 +19,10 @@ export class AccountRepository implements IAccountRepository {
       .getMany();
   }
 
+  async getById(id: number): Promise<AccountEntity> {
+    return this.accountRepository.findOneByOrFail({ id });
+  }
+
   async save(account: Partial<AccountEntity>): Promise<AccountEntity> {
     return this.accountRepository.save(this.accountRepository.create(account));
   }

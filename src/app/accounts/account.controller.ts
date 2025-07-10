@@ -5,6 +5,7 @@ import {
   HttpCode,
   HttpStatus,
   Inject,
+  Param,
   Post,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiBody, ApiTags } from '@nestjs/swagger';
@@ -27,6 +28,16 @@ export class AccountController {
   @ApiResponse({ status: 500, description: 'Server error.' })
   getAccounts(): Promise<AccountResponseDto[]> {
     return this.accountService.getAccounts();
+  }
+
+  @Get('/:id')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Gel account by id' })
+  @ApiResponse({ status: 200, description: 'Account successfully retrieved.' })
+  @ApiResponse({ status: 404, description: 'Account not found.' })
+  @ApiResponse({ status: 500, description: 'Server error.' })
+  getAccountById(@Param('id') id: number): Promise<AccountResponseDto> {
+    return this.accountService.getAccountById(id);
   }
 
   @Post('/')
