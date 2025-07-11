@@ -27,7 +27,7 @@ export class CreateAccountRequestDto {
 
 export class AccountResponseDto extends CreateAccountRequestDto {
   @ApiProperty({
-    description: 'Unique identifier of the account',
+    description: 'Id of the account',
     example: 123,
   })
   @Expose()
