@@ -15,6 +15,10 @@ export class AddDefaultAccounts1752196458327 implements MigrationInterface {
         (7, 'Crédito de Juros', 'R'),
         (8, 'Apartamento de Aluguel', 'R');
     `);
+
+    await queryRunner.query(`
+      SELECT setval('accounts_id_seq', (SELECT MAX(id) FROM accounts));
+    `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
