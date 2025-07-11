@@ -16,4 +16,4 @@ import { IAccountRepository } from './account.repository.interface';
   ],
   exports: [IAccountRepository],
 })
-export class LegacyAddressRepositoryModule {}
+export class AccountRepositoryModule {}

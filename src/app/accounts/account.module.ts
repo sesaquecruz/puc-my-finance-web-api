@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 
-import { LegacyAddressRepositoryModule } from 'src/infra/repositories/account.repository.module';
+import { AccountRepositoryModule } from 'src/infra/repositories/account.repository.module';
 
 import { AccountController } from './account.controller';
 import { AccountService } from './account.service';
 import { IAccountService } from './account.service.interface';
 
 @Module({
-  imports: [LegacyAddressRepositoryModule],
+  imports: [AccountRepositoryModule],
   providers: [{ provide: IAccountService, useClass: AccountService }],
   controllers: [AccountController],
 })
