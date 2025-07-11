@@ -3,7 +3,7 @@ import { Inject, Logger } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { AccountEntity } from 'src/domain/entities/account.entity';
 import { InternalError, NotFoundError } from 'src/infra/http/exceptions';
-import { IAccountRepository } from 'src/infra/repositories/account.repository.interface';
+import { IAccountRepository } from 'src/infra/repositories/account/account.repository.interface';
 import { EntityNotFoundError } from 'typeorm';
 
 import { AccountResponseDto, CreateAccountRequestDto } from './account.dto';

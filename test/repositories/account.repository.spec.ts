@@ -4,8 +4,8 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { faker } from '@faker-js/faker';
 import { mock, MockProxy } from 'jest-mock-extended';
 import { AccountEntity } from 'src/domain/entities/account.entity';
-import { IAccountRepository } from 'src/infra/repositories/account.repository.interface';
-import { AccountRepositoryModule } from 'src/infra/repositories/account.repository.module';
+import { IAccountRepository } from 'src/infra/repositories/account/account.repository.interface';
+import { AccountRepositoryModule } from 'src/infra/repositories/account/account.repository.module';
 import { EntityNotFoundError, Repository } from 'typeorm';
 
 import { createAccountEntity } from './generators/account.repository.generator';
