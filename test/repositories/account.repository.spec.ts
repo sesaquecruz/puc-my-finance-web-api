@@ -74,7 +74,8 @@ describe('AccountRepository', () => {
 
     it('Should throw if account not found', async () => {
       const id = faker.number.int();
-      const expectedError = new Error('Not found');
+
+      const expectedError = new EntityNotFoundError(AccountEntity, id);
 
       entityRepository.findOneByOrFail.mockRejectedValueOnce(expectedError);
 
@@ -105,6 +106,7 @@ describe('AccountRepository', () => {
   describe('updateById', () => {
     it('Should update the account by id', async () => {
       const id = faker.number.int();
+
       const accountToUpdate = createAccountEntity();
 
       entityRepository.update.mockResolvedValueOnce({
@@ -125,6 +127,7 @@ describe('AccountRepository', () => {
 
     it('Should throw if no rows affected', async () => {
       const id = faker.number.int();
+
       const accountToUpdate = createAccountEntity();
 
       entityRepository.update.mockResolvedValueOnce({
