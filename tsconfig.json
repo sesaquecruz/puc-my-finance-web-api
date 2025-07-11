@@ -18,5 +18,9 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "resolveJsonModule": true,
+    "paths": {
+      "src/*": ["src/*"],
+      "test/*": ["test/*"]
+    }
   }
 }
