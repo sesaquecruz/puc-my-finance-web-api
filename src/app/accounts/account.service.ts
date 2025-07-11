@@ -1,7 +1,6 @@
 import { Inject, Logger } from '@nestjs/common';
 
-import { plainToInstance } from 'class-transformer';
-import { AccountEntity } from 'src/domain/entities/account.entity';
+import { mapAccountEntityToResponseDto } from 'src/domain/mappers/account.mapper';
 import { InternalError, NotFoundError } from 'src/infra/http/exceptions';
 import { IAccountRepository } from 'src/infra/repositories/account/account.repository.interface';
 import { EntityNotFoundError } from 'typeorm';
@@ -21,9 +20,7 @@ export class AccountService implements IAccountService {
     try {
       const accounts = await this.accountRepository.getAll();
 
-      return accounts.map((account) =>
-        this.mapAccountEntityToResponseDto(account),
-      );
+      return accounts.map((account) => mapAccountEntityToResponseDto(account));
     } catch (error) {
       throw InternalError(this.logger, error);
     }
@@ -33,7 +30,7 @@ export class AccountService implements IAccountService {
     try {
       const account = await this.accountRepository.getById(id);
 
-      return this.mapAccountEntityToResponseDto(account);
+      return mapAccountEntityToResponseDto(account);
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
         throw NotFoundError(this.logger, error);
@@ -50,7 +47,7 @@ export class AccountService implements IAccountService {
       const createdAccount =
         await this.accountRepository.save(createAccountDto);
 
-      return this.mapAccountEntityToResponseDto(createdAccount);
+      return mapAccountEntityToResponseDto(createdAccount);
     } catch (error) {
       throw InternalError(this.logger, error);
     }
@@ -81,13 +78,5 @@ export class AccountService implements IAccountService {
 
       throw InternalError(this.logger, error);
     }
-  }
-
-  private mapAccountEntityToResponseDto(
-    account: AccountEntity,
-  ): AccountResponseDto {
-    return plainToInstance(AccountResponseDto, account, {
-      excludeExtraneousValues: true,
-    });
   }
 }
