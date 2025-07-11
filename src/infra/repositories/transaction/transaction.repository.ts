@@ -21,4 +21,8 @@ export class TransactionRepository implements ITransactionRepository {
       .orderBy('date', 'ASC')
       .getMany();
   }
+
+  async getById(id: number): Promise<TransactionEntity> {
+    return this.transactionRepository.findOneByOrFail({ id });
+  }
 }
