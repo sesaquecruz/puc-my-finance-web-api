@@ -25,4 +25,12 @@ export class TransactionRepository implements ITransactionRepository {
   async getById(id: number): Promise<TransactionEntity> {
     return this.transactionRepository.findOneByOrFail({ id });
   }
+
+  async save(
+    transaction: Partial<TransactionEntity>,
+  ): Promise<TransactionEntity> {
+    return this.transactionRepository.save(
+      this.transactionRepository.create(transaction),
+    );
+  }
 }
