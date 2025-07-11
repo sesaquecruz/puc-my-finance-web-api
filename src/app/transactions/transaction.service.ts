@@ -5,7 +5,10 @@ import { InternalError, NotFoundError } from 'src/infra/http/exceptions';
 import { ITransactionRepository } from 'src/infra/repositories/transaction/transaction.repository.interface';
 import { EntityNotFoundError } from 'typeorm';
 
-import { TransactionResponseDto } from './transaction.dto';
+import {
+  CreateTransactionRequestDto,
+  TransactionResponseDto,
+} from './transaction.dto';
 import { ITransactionService } from './transaction.service.interface';
 
 export class TransactionService implements ITransactionService {
@@ -44,6 +47,19 @@ export class TransactionService implements ITransactionService {
         throw NotFoundError(this.logger, error);
       }
 
+      throw InternalError(this.logger, error);
+    }
+  }
+
+  async createTransaction(
+    createTransactionDto: CreateTransactionRequestDto,
+  ): Promise<TransactionResponseDto> {
+    try {
+      const createdTransaction =
+        await this.transactionRepository.save(createTransactionDto);
+
+      return mapTransactionEntityToResponseDto(createdTransaction);
+    } catch (error) {
       throw InternalError(this.logger, error);
     }
   }

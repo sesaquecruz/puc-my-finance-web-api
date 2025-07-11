@@ -1,4 +1,7 @@
-import { TransactionResponseDto } from './transaction.dto';
+import {
+  CreateTransactionRequestDto,
+  TransactionResponseDto,
+} from './transaction.dto';
 
 export interface ITransactionService {
   getTransactions(
@@ -7,6 +10,10 @@ export interface ITransactionService {
   ): Promise<TransactionResponseDto[]>;
 
   getTransactionById(id: number): Promise<TransactionResponseDto>;
+
+  createTransaction(
+    createTransactionDto: CreateTransactionRequestDto,
+  ): Promise<TransactionResponseDto>;
 }
 
 export const ITransactionService = Symbol('ITransactionService');

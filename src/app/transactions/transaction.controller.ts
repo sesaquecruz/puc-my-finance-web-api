@@ -1,15 +1,21 @@
 import {
+  Body,
   Controller,
   Get,
   HttpCode,
   HttpStatus,
   Inject,
   Param,
+  Post,
   Query,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { TransactionQueryDto, TransactionResponseDto } from './transaction.dto';
+import {
+  CreateTransactionRequestDto,
+  TransactionQueryDto,
+  TransactionResponseDto,
+} from './transaction.dto';
 import { ITransactionService } from './transaction.service.interface';
 
 @ApiTags('Transactions')
@@ -48,5 +54,21 @@ export class TransactionController {
   @ApiResponse({ status: 500, description: 'Server error.' })
   getTransactionById(@Param('id') id: number): Promise<TransactionResponseDto> {
     return this.transactionService.getTransactionById(id);
+  }
+
+  @Post('/')
+  @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Create a new transaction' })
+  @ApiResponse({
+    status: 201,
+    description: 'Transaction successfully created.',
+  })
+  @ApiResponse({ status: 400, description: 'Invalid input data.' })
+  @ApiResponse({ status: 500, description: 'Server error.' })
+  @ApiBody({ type: CreateTransactionRequestDto })
+  createTransaction(
+    @Body() createTransactionDto: CreateTransactionRequestDto,
+  ): Promise<TransactionResponseDto> {
+    return this.transactionService.createTransaction(createTransactionDto);
   }
 }
