@@ -5,6 +5,8 @@ export interface ITransactionService {
     startDate: Date,
     endDate: Date,
   ): Promise<TransactionResponseDto[]>;
+
+  getTransactionById(id: number): Promise<TransactionResponseDto>;
 }
 
 export const ITransactionService = Symbol('ITransactionService');

@@ -4,6 +4,7 @@ import {
   HttpCode,
   HttpStatus,
   Inject,
+  Param,
   Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -34,5 +35,18 @@ export class TransactionController {
       query.startDate,
       query.endDate,
     );
+  }
+
+  @Get('/:id')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Gel transaction by id' })
+  @ApiResponse({
+    status: 200,
+    description: 'Transaction successfully retrieved.',
+  })
+  @ApiResponse({ status: 404, description: 'Transaction not found.' })
+  @ApiResponse({ status: 500, description: 'Server error.' })
+  getTransactionById(@Param('id') id: number): Promise<TransactionResponseDto> {
+    return this.transactionService.getTransactionById(id);
   }
 }
