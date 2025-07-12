@@ -6,7 +6,6 @@ import {
   IsNumber,
   IsPositive,
   IsString,
-  IsDateString,
   IsInt,
   IsDate,
 } from 'class-validator';
@@ -46,7 +45,8 @@ export class CreateTransactionRequestDto {
     example: '2023-07-10T14:00:00-03:00',
   })
   @Expose()
-  @IsDateString()
+  @Type(() => Date)
+  @IsDate()
   @IsNotEmpty()
   date: Date;
 
