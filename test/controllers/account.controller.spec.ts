@@ -1,4 +1,4 @@
-import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
+import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
@@ -7,6 +7,7 @@ import { mock, MockProxy } from 'jest-mock-extended';
 import { AccountModule } from 'src/app/accounts/account.module';
 import { IAccountService } from 'src/app/accounts/account.service.interface';
 import { AccountEntity } from 'src/domain/entities/account.entity';
+import { GlobalValidationPipe } from 'src/infra/http/pipes';
 import * as request from 'supertest';
 import {
   createAccountRequestDto,
@@ -35,11 +36,7 @@ describe('AccountController', () => {
 
     app = module.createNestApplication();
 
-    app.useGlobalPipes(
-      new ValidationPipe({
-        transform: true,
-      }),
-    );
+    app.useGlobalPipes(GlobalValidationPipe);
 
     await app.init();
   });

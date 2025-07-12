@@ -1,10 +1,10 @@
-import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { version } from '../package.json';
 import { EnvDto } from './config/env.config';
+import { GlobalValidationPipe } from './infra/http/pipes';
 import { MainModule } from './main.module';
 
 async function main(): Promise<void> {
@@ -27,13 +27,7 @@ async function main(): Promise<void> {
     swaggerDocument,
   );
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-      whitelist: true,
-      forbidNonWhitelisted: true,
-    }),
-  );
+  app.useGlobalPipes(GlobalValidationPipe);
 
   await app.listen(configService.get('API_PORT'));
 }
