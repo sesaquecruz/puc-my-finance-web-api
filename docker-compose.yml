@@ -1,5 +1,6 @@
 services:
   postgres:
+    container_name: my-finance-web-db
     image: postgres:17
     ports:
       - "${DATABASE_PORT}:5432"
@@ -7,3 +8,24 @@ services:
       POSTGRES_DB: ${DATABASE_NAME}
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+
+  app:
+    container_name: my-finance-web-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    ports:
+      - "${API_PORT}:8080"
+    environment:
+      API_PORT: 8080
+      API_URL: ${API_URL}
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+    depends_on:
+      - postgres
+    profiles:
+      - app
