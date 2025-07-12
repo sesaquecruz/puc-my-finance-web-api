@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 import { Expose } from 'class-transformer';
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
@@ -24,6 +24,10 @@ export class CreateAccountRequestDto {
   @IsNotEmpty()
   type: AccountType;
 }
+
+export class UpdateAccountRequestDto extends PartialType(
+  CreateAccountRequestDto,
+) {}
 
 export class AccountResponseDto extends CreateAccountRequestDto {
   @ApiProperty({

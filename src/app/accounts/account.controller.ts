@@ -12,7 +12,11 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiBody, ApiTags } from '@nestjs/swagger';
 
-import { AccountResponseDto, CreateAccountRequestDto } from './account.dto';
+import {
+  AccountResponseDto,
+  CreateAccountRequestDto,
+  UpdateAccountRequestDto,
+} from './account.dto';
 import { IAccountService } from './account.service.interface';
 
 @ApiTags('Accounts')
@@ -61,10 +65,10 @@ export class AccountController {
   @ApiResponse({ status: 200, description: 'Account successfully updated.' })
   @ApiResponse({ status: 404, description: 'Account not found.' })
   @ApiResponse({ status: 500, description: 'Server error.' })
-  @ApiBody({ type: CreateAccountRequestDto })
+  @ApiBody({ type: UpdateAccountRequestDto })
   updateAccountById(
     @Param('id') id: number,
-    @Body() updateAccountDto: Partial<CreateAccountRequestDto>,
+    @Body() updateAccountDto: UpdateAccountRequestDto,
   ): Promise<void> {
     return this.accountService.updateAccountById(id, updateAccountDto);
   }
