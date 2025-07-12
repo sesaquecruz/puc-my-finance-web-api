@@ -6,7 +6,7 @@ import { AccountModule } from './app/accounts/account.module';
 import { TransactionModule } from './app/transactions/transaction.module';
 import { envValidator } from './config/env.config';
 import { TypeOrmConfig } from './config/typeorm.config';
-import { LoggerMiddleware } from './infra/http/logger.middleware';
+import { LoggerMiddleware } from './infra/http/middlewares';
 
 @Module({
   imports: [
