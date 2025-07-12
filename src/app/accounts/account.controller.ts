@@ -60,7 +60,7 @@ export class AccountController {
   }
 
   @Put('/:id')
-  @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Update account by id' })
   @ApiResponse({ status: 200, description: 'Account successfully updated.' })
   @ApiResponse({ status: 404, description: 'Account not found.' })
