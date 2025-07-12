@@ -16,7 +16,10 @@ import { IAccountRepository } from 'src/infra/repositories/account/account.repos
 import { createAccountEntity } from 'test/repositories/generators/account.repository.generator';
 import { EntityNotFoundError, Repository } from 'typeorm';
 
-import { createAccountRequestDto } from './generators/account.service.generator';
+import {
+  createAccountRequestDto,
+  createUpdateAccountRequestDto,
+} from './generators/account.service.generator';
 
 describe('AccountService', () => {
   let accountService: IAccountService;
@@ -157,7 +160,7 @@ describe('AccountService', () => {
     it('Should update account by id', async () => {
       const id = faker.number.int();
 
-      const dto = createAccountRequestDto();
+      const dto = createUpdateAccountRequestDto();
 
       accountRepository.updateById.mockResolvedValueOnce();
 
@@ -171,7 +174,7 @@ describe('AccountService', () => {
     it('Should throw if account not exists', async () => {
       const id = faker.number.int();
 
-      const dto = createAccountRequestDto();
+      const dto = createUpdateAccountRequestDto();
 
       const expectedError = new NotFoundException(ErrorMessage.NOT_FOUND);
 
