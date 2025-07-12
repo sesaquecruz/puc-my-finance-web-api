@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -92,5 +93,18 @@ export class TransactionController {
       id,
       updateTransactionDto,
     );
+  }
+
+  @Delete('/:id')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Delete transaction by id' })
+  @ApiResponse({
+    status: 200,
+    description: 'Transaction successfully deleted.',
+  })
+  @ApiResponse({ status: 404, description: 'Transaction not found.' })
+  @ApiResponse({ status: 500, description: 'Server error.' })
+  deleteTransactionById(@Param('id') id: number): Promise<void> {
+    return this.transactionService.deleteTransactionById(id);
   }
 }

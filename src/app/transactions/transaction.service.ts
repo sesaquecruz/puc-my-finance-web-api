@@ -78,4 +78,16 @@ export class TransactionService implements ITransactionService {
       throw InternalError(this.logger, error);
     }
   }
+
+  async deleteTransactionById(id: number): Promise<void> {
+    try {
+      await this.transactionRepository.deleteById(id);
+    } catch (error) {
+      if (error instanceof EntityNotFoundError) {
+        throw NotFoundError(this.logger, error);
+      }
+
+      throw InternalError(this.logger, error);
+    }
+  }
 }

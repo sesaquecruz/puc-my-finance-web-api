@@ -19,6 +19,8 @@ export interface ITransactionService {
     id: number,
     updateTransactionDto: Partial<CreateTransactionRequestDto>,
   ): Promise<void>;
+
+  deleteTransactionById(id: number): Promise<void>;
 }
 
 export const ITransactionService = Symbol('ITransactionService');
