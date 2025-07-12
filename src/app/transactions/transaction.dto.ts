@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 import { Expose, Type } from 'class-transformer';
 import {
@@ -68,6 +68,10 @@ export class CreateTransactionRequestDto {
   @IsPositive()
   value: number;
 }
+
+export class UpdateTransactionRequestDto extends PartialType(
+  CreateTransactionRequestDto,
+) {}
 
 export class TransactionResponseDto extends CreateTransactionRequestDto {
   @ApiProperty({

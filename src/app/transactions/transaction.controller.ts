@@ -7,6 +7,7 @@ import {
   Inject,
   Param,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -15,6 +16,7 @@ import {
   CreateTransactionRequestDto,
   TransactionQueryDto,
   TransactionResponseDto,
+  UpdateTransactionRequestDto,
 } from './transaction.dto';
 import { ITransactionService } from './transaction.service.interface';
 
@@ -70,5 +72,25 @@ export class TransactionController {
     @Body() createTransactionDto: CreateTransactionRequestDto,
   ): Promise<TransactionResponseDto> {
     return this.transactionService.createTransaction(createTransactionDto);
+  }
+
+  @Put('/:id')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Update transaction by id' })
+  @ApiResponse({
+    status: 200,
+    description: 'Transaction successfully updated.',
+  })
+  @ApiResponse({ status: 404, description: 'Transaction not found.' })
+  @ApiResponse({ status: 500, description: 'Server error.' })
+  @ApiBody({ type: UpdateTransactionRequestDto })
+  updateTransactionById(
+    @Param('id') id: number,
+    @Body() updateTransactionDto: UpdateTransactionRequestDto,
+  ): Promise<void> {
+    return this.transactionService.updateTransactionById(
+      id,
+      updateTransactionDto,
+    );
   }
 }

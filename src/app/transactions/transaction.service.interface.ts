@@ -14,6 +14,11 @@ export interface ITransactionService {
   createTransaction(
     createTransactionDto: CreateTransactionRequestDto,
   ): Promise<TransactionResponseDto>;
+
+  updateTransactionById(
+    id: number,
+    updateTransactionDto: Partial<CreateTransactionRequestDto>,
+  ): Promise<void>;
 }
 
 export const ITransactionService = Symbol('ITransactionService');

@@ -63,4 +63,19 @@ export class TransactionService implements ITransactionService {
       throw InternalError(this.logger, error);
     }
   }
+
+  async updateTransactionById(
+    id: number,
+    updateTransactionDto: Partial<CreateTransactionRequestDto>,
+  ): Promise<void> {
+    try {
+      await this.transactionRepository.updateById(id, updateTransactionDto);
+    } catch (error) {
+      if (error instanceof EntityNotFoundError) {
+        throw NotFoundError(this.logger, error);
+      }
+
+      throw InternalError(this.logger, error);
+    }
+  }
 }
