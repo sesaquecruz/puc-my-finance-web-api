@@ -17,7 +17,7 @@ export function createTransactionEntity(): TransactionEntity {
     history: faker.word.words(),
     date: faker.date.recent(),
     accountId: faker.number.int(),
-    value: faker.number.float(),
+    value: faker.number.float({ fractionDigits: 2 }),
     createdAt: faker.date.past(),
     updatedAt: faker.date.recent(),
     deletedAt: null,

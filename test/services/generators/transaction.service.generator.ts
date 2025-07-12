@@ -18,7 +18,7 @@ export function createTransactionRequestDto(): CreateTransactionRequestDto {
     history: faker.word.words(),
     date: faker.date.recent(),
     accountId: faker.number.int(),
-    value: faker.number.float(),
+    value: faker.number.float({ fractionDigits: 2 }),
   };
 }
 
