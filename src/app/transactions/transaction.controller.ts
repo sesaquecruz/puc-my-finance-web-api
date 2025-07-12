@@ -73,7 +73,7 @@ export class TransactionController {
   }
 
   @Put('/:id')
-  @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Update transaction by id' })
   @ApiResponse({
     status: 200,
