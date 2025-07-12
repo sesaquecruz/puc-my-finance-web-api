@@ -1,12 +1,12 @@
 import {
   CreateTransactionRequestDto,
+  TransactionQueryDto,
   TransactionResponseDto,
 } from './transaction.dto';
 
 export interface ITransactionService {
   getTransactions(
-    startDate: Date,
-    endDate: Date,
+    queryDto: TransactionQueryDto,
   ): Promise<TransactionResponseDto[]>;
 
   getTransactionById(id: number): Promise<TransactionResponseDto>;

@@ -11,7 +11,12 @@ export class TransactionRepository implements ITransactionRepository {
     private readonly transactionRepository: Repository<TransactionEntity>,
   ) {}
 
-  async getAll(startDate: Date, endDate: Date): Promise<TransactionEntity[]> {
+  async getAll(query: {
+    startDate: Date;
+    endDate: Date;
+  }): Promise<TransactionEntity[]> {
+    const { startDate, endDate } = query;
+
     return this.transactionRepository
       .createQueryBuilder()
       .where('date BETWEEN :startDate AND :endDate', {

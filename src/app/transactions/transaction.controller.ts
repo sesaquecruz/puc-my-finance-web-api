@@ -40,10 +40,7 @@ export class TransactionController {
   getTransactions(
     @Query() query: TransactionQueryDto,
   ): Promise<TransactionResponseDto[]> {
-    return this.transactionService.getTransactions(
-      query.startDate,
-      query.endDate,
-    );
+    return this.transactionService.getTransactions(query);
   }
 
   @Get('/:id')

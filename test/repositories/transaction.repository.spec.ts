@@ -8,7 +8,10 @@ import { ITransactionRepository } from 'src/infra/repositories/transaction/trans
 import { TransactionRepositoryModule } from 'src/infra/repositories/transaction/transaction.repository.module';
 import { EntityNotFoundError, Repository } from 'typeorm';
 
-import { createTransactionEntity } from './generators/transaction.repository.generator';
+import {
+  createGetAllQuery,
+  createTransactionEntity,
+} from './generators/transaction.repository.generator';
 
 describe('TransactionRepository', () => {
   let transactionRepository: ITransactionRepository;
@@ -31,8 +34,7 @@ describe('TransactionRepository', () => {
 
   describe('getAll', () => {
     it('Should return all transactions', async () => {
-      const startDate = faker.date.past();
-      const endDate = faker.date.recent();
+      const query = createGetAllQuery();
 
       const expectedTransactions = [
         createTransactionEntity(),
@@ -48,16 +50,16 @@ describe('TransactionRepository', () => {
 
       entityRepository.createQueryBuilder.mockReturnValueOnce(queryBuilder);
 
-      await expect(
-        transactionRepository.getAll(startDate, endDate),
-      ).resolves.toEqual(expectedTransactions);
+      await expect(transactionRepository.getAll(query)).resolves.toEqual(
+        expectedTransactions,
+      );
 
       expect(entityRepository.createQueryBuilder).toHaveBeenCalled();
       expect(queryBuilder.where).toHaveBeenCalledWith(
         'date BETWEEN :startDate AND :endDate',
         {
-          startDate,
-          endDate,
+          startDate: query.startDate,
+          endDate: query.endDate,
         },
       );
       expect(queryBuilder.orderBy).toHaveBeenCalledWith('date', 'ASC');

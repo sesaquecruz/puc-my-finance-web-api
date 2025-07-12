@@ -3,7 +3,15 @@ import {
   CreateTransactionRequestDto,
   UpdateTransactionRequestDto,
   TransactionResponseDto,
+  TransactionQueryDto,
 } from 'src/app/transactions/transaction.dto';
+
+export function createTransactionQueryDto(): TransactionQueryDto {
+  return {
+    startDate: faker.date.past(),
+    endDate: faker.date.recent(),
+  };
+}
 
 export function createTransactionRequestDto(): CreateTransactionRequestDto {
   return {

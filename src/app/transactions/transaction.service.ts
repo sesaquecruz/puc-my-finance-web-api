@@ -7,6 +7,7 @@ import { EntityNotFoundError } from 'typeorm';
 
 import {
   CreateTransactionRequestDto,
+  TransactionQueryDto,
   TransactionResponseDto,
 } from './transaction.dto';
 import { ITransactionService } from './transaction.service.interface';
@@ -20,14 +21,10 @@ export class TransactionService implements ITransactionService {
   ) {}
 
   async getTransactions(
-    startDate: Date,
-    endDate: Date,
+    queryDto: TransactionQueryDto,
   ): Promise<TransactionResponseDto[]> {
     try {
-      const transactions = await this.transactionRepository.getAll(
-        startDate,
-        endDate,
-      );
+      const transactions = await this.transactionRepository.getAll(queryDto);
 
       return transactions.map((transaction) =>
         mapTransactionEntityToResponseDto(transaction),

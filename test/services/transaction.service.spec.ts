@@ -17,6 +17,7 @@ import { createTransactionEntity } from 'test/repositories/generators/transactio
 import { EntityNotFoundError, Repository } from 'typeorm';
 
 import {
+  createTransactionQueryDto,
   createTransactionRequestDto,
   createUpdateTransactionRequestDto,
 } from './generators/transaction.service.generator';
@@ -42,8 +43,7 @@ describe('TransactionService', () => {
 
   describe('getTransactions', () => {
     it('Should return transactions by period date', async () => {
-      const startDate = faker.date.past();
-      const endDate = faker.date.recent();
+      const query = createTransactionQueryDto();
 
       const savedTransactions = [
         createTransactionEntity(),
@@ -57,19 +57,15 @@ describe('TransactionService', () => {
 
       transactionRepository.getAll.mockResolvedValueOnce(savedTransactions);
 
-      await expect(
-        transactionService.getTransactions(startDate, endDate),
-      ).resolves.toEqual(expectedResponse);
-
-      expect(transactionRepository.getAll).toHaveBeenCalledWith(
-        startDate,
-        endDate,
+      await expect(transactionService.getTransactions(query)).resolves.toEqual(
+        expectedResponse,
       );
+
+      expect(transactionRepository.getAll).toHaveBeenCalledWith(query);
     });
 
     it('Should throw on internal error', async () => {
-      const startDate = faker.date.past();
-      const endDate = faker.date.recent();
+      const query = createTransactionQueryDto();
 
       const expectedError = new InternalServerErrorException(
         ErrorMessage.INTERNAL_ERROR,
@@ -77,14 +73,11 @@ describe('TransactionService', () => {
 
       transactionRepository.getAll.mockRejectedValueOnce(expectedError);
 
-      await expect(
-        transactionService.getTransactions(startDate, endDate),
-      ).rejects.toThrow(expectedError);
-
-      expect(transactionRepository.getAll).toHaveBeenCalledWith(
-        startDate,
-        endDate,
+      await expect(transactionService.getTransactions(query)).rejects.toThrow(
+        expectedError,
       );
+
+      expect(transactionRepository.getAll).toHaveBeenCalledWith(query);
     });
   });
 
