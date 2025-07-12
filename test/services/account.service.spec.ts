@@ -7,11 +7,12 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 
 import { faker } from '@faker-js/faker';
 import { mock, MockProxy } from 'jest-mock-extended';
+import { AccountResponseDto } from 'src/app/accounts/account.dto';
 import { AccountModule } from 'src/app/accounts/account.module';
 import { IAccountService } from 'src/app/accounts/account.service.interface';
 import { AccountEntity } from 'src/domain/entities/account.entity';
-import { mapAccountEntityToResponseDto } from 'src/domain/mappers/account.mapper';
 import { ErrorMessage } from 'src/infra/http/exceptions';
+import { mapEntityToResponseDto } from 'src/infra/http/mappers';
 import { IAccountRepository } from 'src/infra/repositories/account/account.repository.interface';
 import { createAccountEntity } from 'test/repositories/generators/account.repository.generator';
 import { EntityNotFoundError, Repository } from 'typeorm';
@@ -49,7 +50,7 @@ describe('AccountService', () => {
       ];
 
       const expectedResponse = savedAccounts.map((account) =>
-        mapAccountEntityToResponseDto(account),
+        mapEntityToResponseDto(account, AccountResponseDto),
       );
 
       accountRepository.getAll.mockResolvedValueOnce(savedAccounts);
@@ -78,7 +79,10 @@ describe('AccountService', () => {
     it('Should return account by id', async () => {
       const savedAccount = createAccountEntity();
 
-      const expectedResponse = mapAccountEntityToResponseDto(savedAccount);
+      const expectedResponse = mapEntityToResponseDto(
+        savedAccount,
+        AccountResponseDto,
+      );
 
       accountRepository.getById.mockResolvedValueOnce(savedAccount);
 
@@ -128,7 +132,10 @@ describe('AccountService', () => {
 
       const createdAccount = createAccountEntity();
 
-      const expectedResponse = mapAccountEntityToResponseDto(createdAccount);
+      const expectedResponse = mapEntityToResponseDto(
+        createdAccount,
+        AccountResponseDto,
+      );
 
       accountRepository.save.mockResolvedValueOnce(createdAccount);
 

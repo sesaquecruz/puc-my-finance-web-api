@@ -1,7 +1,7 @@
 import { Inject, Logger } from '@nestjs/common';
 
-import { mapAccountEntityToResponseDto } from 'src/domain/mappers/account.mapper';
 import { InternalError, NotFoundError } from 'src/infra/http/exceptions';
+import { mapEntityToResponseDto } from 'src/infra/http/mappers';
 import { IAccountRepository } from 'src/infra/repositories/account/account.repository.interface';
 import { EntityNotFoundError } from 'typeorm';
 
@@ -20,7 +20,9 @@ export class AccountService implements IAccountService {
     try {
       const accounts = await this.accountRepository.getAll();
 
-      return accounts.map((account) => mapAccountEntityToResponseDto(account));
+      return accounts.map((account) =>
+        mapEntityToResponseDto(account, AccountResponseDto),
+      );
     } catch (error) {
       throw InternalError(this.logger, error);
     }
@@ -30,7 +32,7 @@ export class AccountService implements IAccountService {
     try {
       const account = await this.accountRepository.getById(id);
 
-      return mapAccountEntityToResponseDto(account);
+      return mapEntityToResponseDto(account, AccountResponseDto);
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
         throw NotFoundError(this.logger, error);
@@ -47,7 +49,7 @@ export class AccountService implements IAccountService {
       const createdAccount =
         await this.accountRepository.save(createAccountDto);
 
-      return mapAccountEntityToResponseDto(createdAccount);
+      return mapEntityToResponseDto(createdAccount, AccountResponseDto);
     } catch (error) {
       throw InternalError(this.logger, error);
     }

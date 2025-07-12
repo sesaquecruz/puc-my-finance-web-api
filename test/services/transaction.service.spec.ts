@@ -7,11 +7,12 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 
 import { faker } from '@faker-js/faker';
 import { mock, MockProxy } from 'jest-mock-extended';
+import { TransactionResponseDto } from 'src/app/transactions/transaction.dto';
 import { TransactionModule } from 'src/app/transactions/transaction.module';
 import { ITransactionService } from 'src/app/transactions/transaction.service.interface';
 import { TransactionEntity } from 'src/domain/entities/transaction.entity';
-import { mapTransactionEntityToResponseDto } from 'src/domain/mappers/transaction.mapper';
 import { ErrorMessage } from 'src/infra/http/exceptions';
+import { mapEntityToResponseDto } from 'src/infra/http/mappers';
 import { ITransactionRepository } from 'src/infra/repositories/transaction/transaction.repository.interface';
 import { createTransactionEntity } from 'test/repositories/generators/transaction.repository.generator';
 import { EntityNotFoundError, Repository } from 'typeorm';
@@ -52,7 +53,7 @@ describe('TransactionService', () => {
       ];
 
       const expectedResponse = savedTransactions.map((transaction) =>
-        mapTransactionEntityToResponseDto(transaction),
+        mapEntityToResponseDto(transaction, TransactionResponseDto),
       );
 
       transactionRepository.getAll.mockResolvedValueOnce(savedTransactions);
@@ -85,8 +86,10 @@ describe('TransactionService', () => {
     it('Should return transaction by id', async () => {
       const savedTransaction = createTransactionEntity();
 
-      const expectedResponse =
-        mapTransactionEntityToResponseDto(savedTransaction);
+      const expectedResponse = mapEntityToResponseDto(
+        savedTransaction,
+        TransactionResponseDto,
+      );
 
       transactionRepository.getById.mockResolvedValueOnce(savedTransaction);
 
@@ -138,8 +141,10 @@ describe('TransactionService', () => {
 
       const createdTransaction = createTransactionEntity();
 
-      const expectedResponse =
-        mapTransactionEntityToResponseDto(createdTransaction);
+      const expectedResponse = mapEntityToResponseDto(
+        createdTransaction,
+        TransactionResponseDto,
+      );
 
       transactionRepository.save.mockResolvedValueOnce(createdTransaction);
 

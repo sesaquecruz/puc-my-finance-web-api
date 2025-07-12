@@ -1,7 +1,7 @@
 import { Inject, Logger } from '@nestjs/common';
 
-import { mapTransactionEntityToResponseDto } from 'src/domain/mappers/transaction.mapper';
 import { InternalError, NotFoundError } from 'src/infra/http/exceptions';
+import { mapEntityToResponseDto } from 'src/infra/http/mappers';
 import { ITransactionRepository } from 'src/infra/repositories/transaction/transaction.repository.interface';
 import { EntityNotFoundError } from 'typeorm';
 
@@ -27,7 +27,7 @@ export class TransactionService implements ITransactionService {
       const transactions = await this.transactionRepository.getAll(queryDto);
 
       return transactions.map((transaction) =>
-        mapTransactionEntityToResponseDto(transaction),
+        mapEntityToResponseDto(transaction, TransactionResponseDto),
       );
     } catch (error) {
       throw InternalError(this.logger, error);
@@ -38,7 +38,7 @@ export class TransactionService implements ITransactionService {
     try {
       const transaction = await this.transactionRepository.getById(id);
 
-      return mapTransactionEntityToResponseDto(transaction);
+      return mapEntityToResponseDto(transaction, TransactionResponseDto);
     } catch (error) {
       if (error instanceof EntityNotFoundError) {
         throw NotFoundError(this.logger, error);
@@ -55,7 +55,7 @@ export class TransactionService implements ITransactionService {
       const createdTransaction =
         await this.transactionRepository.save(createTransactionDto);
 
-      return mapTransactionEntityToResponseDto(createdTransaction);
+      return mapEntityToResponseDto(createdTransaction, TransactionResponseDto);
     } catch (error) {
       throw InternalError(this.logger, error);
     }
