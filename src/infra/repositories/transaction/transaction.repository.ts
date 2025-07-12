@@ -47,4 +47,12 @@ export class TransactionRepository implements ITransactionRepository {
       throw new EntityNotFoundError(TransactionEntity, id);
     }
   }
+
+  async deleteById(id: number): Promise<void> {
+    const result = await this.transactionRepository.delete({ id });
+
+    if (result.affected === 0) {
+      throw new EntityNotFoundError(TransactionEntity, id);
+    }
+  }
 }

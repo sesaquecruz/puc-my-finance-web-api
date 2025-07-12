@@ -11,6 +11,8 @@ export interface ITransactionRepository {
     id: number,
     transaction: Partial<TransactionEntity>,
   ): Promise<void>;
+
+  deleteById(id: number): Promise<void>;
 }
 
 export const ITransactionRepository = Symbol('ITransactionRepository');
