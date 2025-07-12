@@ -15,6 +15,8 @@ import {
 } from 'test/services/generators/account.service.generator';
 import { Repository } from 'typeorm';
 
+import { mapToHttpDto } from './mappers/http.mapper';
+
 describe('AccountController', () => {
   let app: INestApplication;
   let accountService: MockProxy<IAccountService>;
@@ -60,9 +62,7 @@ describe('AccountController', () => {
         .get('/accounts')
         .expect(HttpStatus.OK);
 
-      expect(response.body).toEqual(
-        JSON.parse(JSON.stringify(expectedAccounts)),
-      );
+      expect(response.body).toEqual(mapToHttpDto(expectedAccounts));
 
       expect(accountService.getAccounts).toHaveBeenCalled();
     });
@@ -80,9 +80,7 @@ describe('AccountController', () => {
         .get(`/accounts/${id}`)
         .expect(HttpStatus.OK);
 
-      expect(response.body).toEqual(
-        JSON.parse(JSON.stringify(expectedAccount)),
-      );
+      expect(response.body).toEqual(mapToHttpDto(expectedAccount));
 
       expect(accountService.getAccountById).toHaveBeenCalledWith(id);
     });
@@ -98,12 +96,10 @@ describe('AccountController', () => {
 
       const response = await request(app.getHttpServer())
         .post('/accounts')
-        .send(dto)
+        .send(mapToHttpDto(dto))
         .expect(HttpStatus.CREATED);
 
-      expect(response.body).toEqual(
-        JSON.parse(JSON.stringify(expectedAccount)),
-      );
+      expect(response.body).toEqual(mapToHttpDto(expectedAccount));
 
       expect(accountService.createAccount).toHaveBeenCalledWith(dto);
     });
@@ -119,7 +115,7 @@ describe('AccountController', () => {
 
       const response = await request(app.getHttpServer())
         .put(`/accounts/${id}`)
-        .send(dto)
+        .send(mapToHttpDto(dto))
         .expect(HttpStatus.NO_CONTENT);
 
       expect(response.body).toEqual({});
