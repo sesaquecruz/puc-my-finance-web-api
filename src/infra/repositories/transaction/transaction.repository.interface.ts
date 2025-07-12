@@ -6,6 +6,11 @@ export interface ITransactionRepository {
   getById(id: number): Promise<TransactionEntity>;
 
   save(transaction: Partial<TransactionEntity>): Promise<TransactionEntity>;
+
+  updateById(
+    id: number,
+    transaction: Partial<TransactionEntity>,
+  ): Promise<void>;
 }
 
 export const ITransactionRepository = Symbol('ITransactionRepository');
