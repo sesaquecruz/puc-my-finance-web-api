@@ -45,7 +45,7 @@ export class TransactionController {
 
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Gel transaction by id' })
+  @ApiOperation({ summary: 'Get transaction by id' })
   @ApiResponse({
     status: 200,
     description: 'Transaction successfully retrieved.',

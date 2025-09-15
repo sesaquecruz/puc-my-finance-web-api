@@ -29,7 +29,7 @@ export class AccountController {
 
   @Get('/')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Gel all accounts' })
+  @ApiOperation({ summary: 'Get all accounts' })
   @ApiResponse({ status: 200, description: 'Accounts successfully retrieved.' })
   @ApiResponse({ status: 500, description: 'Server error.' })
   getAccounts(): Promise<AccountResponseDto[]> {
@@ -38,7 +38,7 @@ export class AccountController {
 
   @Get('/:id')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Gel account by id' })
+  @ApiOperation({ summary: 'Get account by id' })
   @ApiResponse({ status: 200, description: 'Account successfully retrieved.' })
   @ApiResponse({ status: 404, description: 'Account not found.' })
   @ApiResponse({ status: 500, description: 'Server error.' })
